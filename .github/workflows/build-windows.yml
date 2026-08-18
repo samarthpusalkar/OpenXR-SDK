@@ -5,13 +5,14 @@ on:
 
 jobs:
   build-sample:
-    runs-on: windows-2022 # Pinned to guarantee Visual Studio 2022 presence
+    runs-on: windows-2022
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Full OpenXR Source
         uses: actions/checkout@v4
         with:
-          submodules: true
+          repository: KhronosGroup/OpenXR-SDK-Source # Explicitly pull the full source repo
+          submodules: recursive # Recursively grabs Catch2 and all other required files
 
       - name: Configure CMake
         run: |
@@ -21,7 +22,7 @@ jobs:
         run: |
           cmake --build build_dir --config Release --target hello_xr
 
-      - name: Upload Hello XR Only
+      - name: Upload Hello XR
         uses: actions/upload-artifact@v4
         with:
           name: hello_xr_windows_x64
