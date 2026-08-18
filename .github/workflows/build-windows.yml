@@ -1,0 +1,29 @@
+name: Build hello_xr Windows
+
+on:
+  workflow_dispatch: # Allows you to manually trigger the build
+
+jobs:
+  build:
+    runs-on: windows-latest # Provides a Windows runner with Visual Studio and MSVC
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake -G "Visual Studio 17 2022" -A x64 ..
+
+      - name: Build Project
+        run: |
+          cd build
+          cmake --build . --config Release --target hello_xr
+
+      - name: Upload hello_xr Binary Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello_xr-windows-x64
+          path: build/src/tests/hello_xr/Release/hello_xr.exe
