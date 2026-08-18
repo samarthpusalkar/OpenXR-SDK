@@ -13,9 +13,6 @@ jobs:
         with:
           submodules: true
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-
       - name: Configure CMake
         run: |
           cmake -B build_dir -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTS=ON -DBUILD_LOADER=ON
