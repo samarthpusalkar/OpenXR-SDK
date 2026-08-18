@@ -1,11 +1,11 @@
 name: Get Hello XR Executable
 
 on:
-  workflow_dispatch: # Gives you the manual play button
+  workflow_dispatch:
 
 jobs:
   build-sample:
-    runs-on: windows-latest
+    runs-on: windows-2022 # Pinned to guarantee Visual Studio 2022 presence
 
     steps:
       - name: Checkout Code
@@ -15,7 +15,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -B build_dir -G "Visual Studio 17 2022" -A x64 -DBUILD_TESTS=ON -DBUILD_LOADER=ON
+          cmake -B build_dir -A x64 -DBUILD_TESTS=ON -DBUILD_LOADER=ON
 
       - name: Compile Executable
         run: |
